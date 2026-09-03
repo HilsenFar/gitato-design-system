@@ -1,0 +1,50 @@
+/* GITATO glow, shadow, radius and background systems. */
+
+:root {
+  /* --- neon glows (box-shadow) --- */
+  --glow-magenta: 0 0 18px rgba(255, 46, 154, .65);
+  --glow-cyan: 0 0 18px rgba(41, 211, 255, .6);
+  --glow-violet: 0 0 24px rgba(124, 108, 255, .45);
+  --glow-gold: 0 0 18px #ffd76e;
+
+  /* --- text glows (text-shadow) --- */
+  --text-glow-cyan: 0 0 12px rgba(25, 224, 255, .5);
+  --text-glow-magenta: 0 0 20px rgba(255, 43, 214, .55);
+
+  /* --- panel / card shadows --- */
+  --shadow-panel: 0 0 60px rgba(80, 20, 140, .35), inset 0 0 30px rgba(40, 10, 80, .4);
+  --shadow-card-hover: 0 30px 70px -20px rgba(124, 108, 255, .55);
+  --shadow-app: 0 8px 28px rgba(0, 0, 0, .5);
+
+  /* --- radii --- */
+  --radius-btn: 4px;        /* beatsurfer buttons */
+  --radius-btn-game: 12px;  /* game menu buttons */
+  --radius-panel: 10px;
+  --radius-card: 20px;      /* hub project cards */
+  --radius-card-kid: 26px;  /* addson cards */
+  --radius-app: 8px;        /* mediestudio --r */
+  --radius-app-sm: 6px;
+  --radius-pill: 999px;
+
+  /* --- page background gradients (layered radials over --bg-0) --- */
+  --bg-hub:
+    radial-gradient(1200px 700px at 70% -10%, rgba(124, 108, 255, 0.16), transparent 60%),
+    radial-gradient(900px 600px at 10% 110%, rgba(255, 77, 109, 0.10), transparent 60%),
+    #05060d;
+  --bg-screen-veil: radial-gradient(circle at 50% 40%, rgba(8, 14, 24, .82), rgba(2, 3, 6, .96));
+  --bg-addson:
+    radial-gradient(900px 500px at 85% -10%, rgba(91, 208, 240, .22), transparent 60%),
+    radial-gradient(800px 500px at -10% 25%, rgba(182, 156, 255, .20), transparent 60%),
+    radial-gradient(700px 500px at 50% 110%, rgba(95, 224, 160, .16), transparent 60%),
+    #0e1230;
+
+  /* --- blur --- */
+  --blur-panel: blur(8px); /* @kind other */
+  --blur-btn: blur(3px); /* @kind other */
+
+  /* --- motion --- */
+  --ease-ui: ease; /* @kind other */    /* the codebase uses plain ease / ease-in-out */
+  --dur-fast: .15s; /* @kind other */   /* button hover */
+  --dur-med: .22s; /* @kind other */    /* card hover lift */
+  --dur-fade: .35s; /* @kind other */   /* screen fades */
+}

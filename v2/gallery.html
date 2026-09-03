@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GITATO Design System v2 — gallery</title>
+<link rel="stylesheet" href="gitato-ds.css">
+<style>
+  body { margin:0; background:var(--gt-sub-0); color:var(--gt-ink-1);
+         font-family:var(--gt-font-body); }
+  .wrap { max-width:var(--gt-wrap); margin:0 auto; padding:var(--gt-s-7) var(--gt-s-5) var(--gt-s-9);
+          position:relative; z-index:2; }
+  section { margin-bottom:var(--gt-s-7); }
+  .sec-label { display:flex; align-items:center; gap:var(--gt-s-3); margin-bottom:var(--gt-s-4); }
+  .sec-label span { font-family:var(--gt-font-ui); font-size:var(--gt-t-xs); font-weight:700;
+                    letter-spacing:var(--gt-track-label); text-transform:uppercase;
+                    color:var(--gt-ink-3); white-space:nowrap; }
+  .sec-label hr { flex:1; margin:0; }
+  .bank { display:flex; gap:var(--gt-s-3); flex-wrap:wrap; align-items:center; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:var(--gt-s-4); }
+  .cardbody { padding:var(--gt-s-4); }
+  .cardbody p { margin:var(--gt-s-2) 0 var(--gt-s-3); }
+  .lit-head { height:80px; position:relative;
+    background:linear-gradient(180deg,
+        color-mix(in srgb, var(--gt-sig) 26%, transparent), transparent),
+      repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 9px, transparent 9px 18px);
+    border-bottom:1px solid var(--gt-edge-hair); }
+  .lit-head b { position:absolute; left:14px; bottom:11px; font-family:var(--gt-font-ui);
+                font-size:var(--gt-t-md); font-weight:700; letter-spacing:var(--gt-track-head);
+                text-transform:uppercase; }
+  .lit-head .gt-serial { position:absolute; right:11px; top:9px; }
+  .themes { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:var(--gt-s-3); }
+  .tt { padding:var(--gt-s-4); }
+  .tt .sw { height:26px; border-radius:var(--gt-r-1); background:var(--gt-sig);
+            box-shadow:0 0 0 1px var(--gt-sig-dk), var(--gt-bloom-sm); margin-bottom:var(--gt-s-3); }
+  .stack { display:flex; flex-direction:column; gap:var(--gt-s-2); align-items:flex-start; }
+  .elev { display:grid; grid-template-columns:repeat(5,1fr); gap:var(--gt-s-3); }
+  .elev div { height:74px; border-radius:var(--gt-r-3); background:var(--gt-pl-1);
+              border:1px solid var(--gt-edge-hair); display:grid; place-items:center;
+              font-family:var(--gt-font-mono); font-size:var(--gt-t-xs); color:var(--gt-ink-3); }
+  .inkrow { display:flex; gap:var(--gt-s-4); flex-wrap:wrap; padding:var(--gt-s-4); }
+  .inkrow div { font-size:var(--gt-t-base); }
+  .themepick { display:flex; align-items:center; gap:var(--gt-s-3); margin:0 0 var(--gt-s-7); }
+</style>
+</head>
+<body data-gt="hub">
+<div class="gt-vignette"></div>
+<div class="gt-grain"></div>
+
+<div class="wrap">
+  <p class="gt-logo" style="font-size:var(--gt-t-3xl); margin:0 0 6px;">GITATO</p>
+  <p class="gt-tagline" style="margin:0 0 var(--gt-s-4);">Design system v2 · machined signage</p>
+  <div class="themepick">
+    <label class="gt-label" for="theme">Theme</label>
+    <select id="theme" class="gt-input" onchange="document.body.dataset.gt=this.value">
+      <option value="hub">hub · violet</option>
+      <option value="game">game · cyan</option>
+      <option value="rts">rts · teal</option>
+      <option value="beatsurfer">beatsurfer · magenta</option>
+      <option value="frequencypilot">frequencypilot · teal</option>
+      <option value="addson">addson · sky</option>
+      <option value="mediestudio">mediestudio · cyan</option>
+      <option value="sprunkiverse">sprunkiverse · plum</option>
+      <option value="hector">hector · gold</option>
+      <option value="rltracker">rltracker · cyan</option>
+    </select>
+  </div>
+
+  <section>
+    <div class="sec-label"><span>Emissive plates — primary</span><hr class="gt-hr"></div>
+    <div class="bank">
+      <button class="gt-plate">Play now</button>
+      <button class="gt-plate" style="--gt-sig:var(--gt-magenta);--gt-sig-dk:var(--gt-magenta-dk)">Insert coin</button>
+      <button class="gt-plate" style="--gt-sig:var(--gt-green);--gt-sig-dk:var(--gt-green-dk)">Download</button>
+      <button class="gt-plate" disabled>Unavailable</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Machined plates — default</span><hr class="gt-hr"></div>
+    <div class="bank">
+      <button class="gt-btn">Settings</button>
+      <button class="gt-btn gt-btn--marked">Skirmish vs AI</button>
+      <button class="gt-btn gt-btn--ghost">How to play</button>
+      <button class="gt-btn" disabled>Locked</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Inputs, chips, badges</span><hr class="gt-hr"></div>
+    <div class="bank">
+      <input class="gt-input" placeholder="Room code" size="12" aria-label="Room code">
+      <span class="gt-chip">Minecraft</span>
+      <span class="gt-chip gt-chip--lit">Active</span>
+      <span class="gt-badge">GT-0142</span>
+      <span class="gt-chip gt-chip--lit" style="--gt-sig:var(--gt-green);--gt-sig-dk:var(--gt-green-dk)"><svg class="gi gi--sm" aria-hidden="true" focusable="false"><use href="icons.svg#gi-check-circle"/></svg>Verified</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Cards</span><hr class="gt-hr"></div>
+    <div class="cards">
+      <a class="gt-card gt-riveted" href="#"><i class="gt-rivet"></i>
+        <div class="lit-head"><span class="gt-serial">GT-001</span><b>Gitato Command</b></div>
+        <div class="cardbody"><p class="gt-body">3D multiplayer RTS in your browser. Harvest crystals, raise a neon army.</p>
+        <span class="gt-tagline" style="font-size:var(--gt-t-xs)">Play now ▸</span></div></a>
+      <a class="gt-card gt-riveted" href="#" style="--gt-sig:var(--gt-magenta);--gt-sig-ink:var(--gt-magenta-ink)"><i class="gt-rivet"></i>
+        <div class="lit-head"><span class="gt-serial">GT-002</span><b>BeatSurfer</b></div>
+        <div class="cardbody"><p class="gt-body">Neon-synthwave rhythm flyer. Drop in a song and surf its frequency bands.</p>
+        <span class="gt-tagline" style="font-size:var(--gt-t-xs)">Play ▸</span></div></a>
+      <div class="gt-card gt-card--soon">
+        <div class="lit-head" style="--gt-sig:var(--gt-edge-bezel)"><span class="gt-serial">GT-00X</span><b class="gt-card__title">HilsenFar — music</b></div>
+        <div class="cardbody"><p class="gt-body">Live sets, hard techno and AI basslines.</p>
+        <span class="gt-label">Coming soon</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Elevation</span><hr class="gt-hr"></div>
+    <div class="elev">
+      <div class="gt-elev-0">elev-0</div>
+      <div class="gt-elev-1">elev-1</div>
+      <div class="gt-elev-2">elev-2</div>
+      <div class="gt-elev-3">elev-3</div>
+      <div class="gt-elev-4">elev-4</div>
+    </div>
+    <div class="elev" style="margin-top:var(--gt-s-3)">
+      <div class="gt-sunken" style="grid-column:span 2">sunken</div>
+      <div style="grid-column:span 3; box-shadow:var(--gt-e-2); background:var(--gt-pl-1);
+                  border:1px solid var(--gt-edge-hair); border-radius:var(--gt-r-3);
+                  display:grid; place-items:center; font-family:var(--gt-font-mono);
+                  font-size:var(--gt-t-xs); color:var(--gt-ink-3)">shadow only — this is what elevation looked like before the fill was raised too</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Hazard bands</span><hr class="gt-hr"></div>
+    <div class="gt-hazard"></div>
+    <div class="gt-hazard gt-hazard--danger" style="margin-top:8px"></div>
+    <div class="gt-hazard gt-hazard--inert" style="margin-top:8px"></div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Ink ramp on the worst-case surface (pl-3)</span><hr class="gt-hr"></div>
+    <div class="gt-panel inkrow" style="background:var(--gt-pl-3)">
+      <div style="color:var(--gt-ink-1)">ink-1 primary 12.2:1</div>
+      <div style="color:var(--gt-ink-2)">ink-2 body 7.8:1</div>
+      <div style="color:var(--gt-ink-3)">ink-3 meta 5.1:1</div>
+      <div style="color:var(--gt-sig-ink)">sig-ink 6.1:1</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Product themes — five knobs, shared floor</span><hr class="gt-hr"></div>
+    <div class="themes">
+      <div class="gt-panel tt" data-gt="hub"><div class="sw"></div><p class="gt-label" style="margin:0">Hub · violet</p></div>
+      <div class="gt-panel tt" data-gt="game"><div class="sw"></div><p class="gt-label" style="margin:0">Game · cyan</p></div>
+      <div class="gt-panel tt" data-gt="rts"><div class="sw"></div><p class="gt-label" style="margin:0">RTS · teal</p></div>
+      <div class="gt-panel tt" data-gt="beatsurfer"><div class="sw"></div><p class="gt-label" style="margin:0">BeatSurfer · magenta</p></div>
+      <div class="gt-panel tt" data-gt="addson"><div class="sw"></div><p class="gt-label" style="margin:0">AddSon · sky</p></div>
+      <div class="gt-panel tt" data-gt="mediestudio"><div class="sw"></div><p class="gt-label" style="margin:0">MedieStudio · cyan</p></div>
+      <div class="gt-panel tt" data-gt="sprunkiverse"><div class="sw"></div><p class="gt-label" style="margin:0">Sprunkiverse · plum</p></div>
+      <div class="gt-panel tt" data-gt="hector"><div class="sw"></div><p class="gt-label" style="margin:0">Hector · gold</p></div>
+      <div class="gt-panel tt" data-gt="frequencypilot"><div class="sw"></div><p class="gt-label" style="margin:0">FrequencyPilot · teal</p></div>
+      <div class="gt-panel tt" data-gt="rltracker"><div class="sw"></div><p class="gt-label" style="margin:0">RL Tracker · cyan</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Icons in context</span><hr class="gt-hr"></div>
+    <div class="bank">
+      <button class="gt-plate"><svg class="gi" aria-hidden="true" focusable="false"><use href="icons.svg#gi-play"/></svg>Play</button>
+      <button class="gt-btn"><svg class="gi" aria-hidden="true" focusable="false"><use href="icons.svg#gi-download"/></svg>Download</button>
+      <button class="gt-btn"><svg class="gi" aria-hidden="true" focusable="false"><use href="icons.svg#gi-gear"/></svg>Settings</button>
+      <button class="gt-btn"><svg class="gi" aria-hidden="true" focusable="false"><use href="icons.svg#gi-gamepad"/></svg>Controller</button>
+      <button class="gt-btn gt-btn--ghost"><svg class="gi" aria-hidden="true" focusable="false"><use href="icons.svg#gi-share"/></svg>Share</button>
+      <span class="gt-num" style="font-size:var(--gt-t-xl); color:var(--gt-sig-ink)">1 284 950</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-label"><span>Type scale</span><hr class="gt-hr"></div>
+    <div class="gt-panel" style="padding:var(--gt-s-5)">
+      <p class="gt-h1" style="margin:0 0 var(--gt-s-2)">Heading one</p>
+      <p class="gt-h2" style="margin:0 0 var(--gt-s-3)">Heading two</p>
+      <p class="gt-body" style="margin:0 0 var(--gt-s-3)">Body copy in Barlow. The portfolio previously declared Rajdhani on the game surface and never loaded the font at all, so nine of ten surfaces rendered in Segoe UI — the brand typography reached the screen in exactly one place.</p>
+      <p class="gt-label" style="margin:0 0 var(--gt-s-2)">Label · uppercase · tracked</p>
+      <p class="gt-serial" style="margin:0">SERIAL · GT-2026-07-25 · REV 2</p>
+    </div>
+  </section>
+</div>
+</body>
+</html>

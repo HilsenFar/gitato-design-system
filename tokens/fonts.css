@@ -1,0 +1,4 @@
+/* GITATO webfonts — the deployed sites load these exact families from Google Fonts
+   (see beatsurfer/index.html). Orbitron = logo/display, Rajdhani = game-surface UI.
+   Hub + app surfaces (MedieStudio, Hector, AddSon) use the system "Segoe UI" stack. */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap");

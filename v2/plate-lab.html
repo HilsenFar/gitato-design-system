@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GITATO plate lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sub-void:#06070A; --sub-0:#0A0C10; --sub-1:#0F1218;
+  --pl-1:#14181F; --pl-2:#1B2029; --pl-3:#232A35; --pl-4:#2C3441;
+  --edge-hair:#333C4B; --edge-bezel:#4A5568; --edge-lip:#59647A;
+  --lip:rgba(146,164,196,.22); --occl:rgba(0,0,0,.62);
+  --ink-1:#E8ECF2; --ink-2:#B9C2CF; --ink-3:#909AA9; --ink-4:#6B7484;
+  --ink-on-lit:#07090C;
+  --sig-cyan:#19E0FF; --sig-cyan-ink:#5FEBFF; --sig-cyan-dk:#0A7E93;
+  --sig-magenta:#FF2BD6; --sig-magenta-ink:#FF7BE6;
+  --sig-yellow:#FFC53D; --sig-green:#35E08A; --sig-red:#FF2B4E;
+  --hz-pitch:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:30px;background:var(--sub-0);color:var(--ink-1);
+     font:14px/1.5 Rajdhani,"Segoe UI",system-ui,sans-serif;}
+h1{font:700 12px/1 Orbitron,sans-serif;letter-spacing:.24em;text-transform:uppercase;
+   color:var(--ink-3);margin:0 0 6px}
+h2{font:600 10.5px/1 Orbitron,sans-serif;letter-spacing:.2em;text-transform:uppercase;
+   color:var(--ink-4);margin:26px 0 12px}
+.bank{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}
+
+/* ── A: EMISSIVE PLATE — dark stencil text on a lit face ─────────── */
+.plate{
+  position:relative; display:inline-flex; align-items:center; gap:9px;
+  padding:12px 22px; border:0; cursor:pointer;
+  font:700 13px/1 Orbitron,sans-serif; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-on-lit); background:var(--sig-cyan);
+  clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.45),
+    inset 0 -1px 0 rgba(0,0,0,.30),
+    0 0 0 1px var(--sig-cyan-dk),
+    0 1px 2px rgba(0,0,0,.7),
+    0 0 22px -4px color-mix(in srgb, var(--sig-cyan) 55%, transparent);
+  transition:filter .14s cubic-bezier(.2,.7,.3,1), transform .14s cubic-bezier(.2,.7,.3,1);
+}
+.plate:hover{filter:brightness(1.13) saturate(1.05);transform:translateY(-1px)}
+.plate:active{transform:translateY(1px);filter:brightness(.94)}
+.plate.mg{background:var(--sig-magenta);box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(0,0,0,.3),
+  0 0 0 1px #93187B,0 1px 2px rgba(0,0,0,.7),
+  0 0 22px -4px color-mix(in srgb,var(--sig-magenta) 55%,transparent)}
+.plate.yl{background:var(--sig-yellow);box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.3),
+  0 0 0 1px #8F6C18,0 1px 2px rgba(0,0,0,.7),
+  0 0 22px -4px color-mix(in srgb,var(--sig-yellow) 55%,transparent)}
+
+/* ── B: MACHINED PLATE — dark face, lit edge (the quiet default) ─── */
+.mplate{
+  position:relative;display:inline-flex;align-items:center;gap:9px;
+  padding:12px 22px;cursor:pointer;
+  font:600 13px/1 Orbitron,sans-serif;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-1);background:linear-gradient(180deg,var(--pl-2),var(--pl-1));
+  border:1px solid var(--edge-bezel);border-radius:3px;
+  box-shadow:inset 0 1px 0 var(--lip),inset 0 -1px 0 var(--occl),0 1px 2px rgba(0,0,0,.6);
+  transition:.14s cubic-bezier(.2,.7,.3,1);
+}
+.mplate:hover{background:linear-gradient(180deg,var(--pl-3),var(--pl-2));
+  border-color:var(--sig-cyan);color:#fff;
+  box-shadow:inset 0 1px 0 var(--lip),inset 0 -1px 0 var(--occl),
+             0 1px 2px rgba(0,0,0,.6),0 0 18px -6px var(--sig-cyan)}
+.mplate::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--sig-cyan);opacity:.85}
+
+/* ── C: the OLD look, for honest comparison ───────────────────────── */
+.oldbtn{
+  display:inline-flex;align-items:center;gap:8px;padding:13px 26px;cursor:pointer;
+  font:700 14px/1 Orbitron,sans-serif;letter-spacing:.18em;text-transform:uppercase;
+  color:#eafcff;background:linear-gradient(180deg,rgba(60,20,90,.5),rgba(20,6,40,.6));
+  border:1px solid rgba(120,80,200,.35);border-radius:4px;
+}
+.oldbtn.pri{border-color:#ff2e9a;box-shadow:0 0 18px rgba(255,46,154,.65)}
+
+/* ── hazard band as a structural divider ──────────────────────────── */
+.hz{height:9px;margin:22px 0 4px;
+  background:repeating-linear-gradient(135deg,var(--sig-yellow) 0 9px,#101319 9px 18px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(0,0,0,.5)}
+
+/* ── card: plate on substrate, with rivets + serial ───────────────── */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
+.card{position:relative;padding:0;overflow:hidden;
+  background:linear-gradient(180deg,var(--pl-1),var(--sub-1));
+  border:1px solid var(--edge-hair);border-radius:4px;
+  box-shadow:inset 0 1px 0 var(--lip),0 10px 30px -14px #000;}
+.card .lit{height:74px;background:
+   linear-gradient(180deg,color-mix(in srgb,var(--sig-cyan) 22%,transparent),transparent),
+   repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 9px,transparent 9px 18px);
+   border-bottom:1px solid var(--edge-hair);position:relative}
+.card .lit b{position:absolute;left:14px;bottom:10px;font:800 17px/1 Orbitron,sans-serif;
+   letter-spacing:.1em;color:var(--ink-1)}
+.card .bd{padding:13px 14px 15px}
+.card p{margin:0 0 10px;color:var(--ink-2);font-size:13px}
+.card .go{font:700 10px/1 Orbitron,sans-serif;letter-spacing:.24em;color:var(--sig-cyan-ink)}
+.card .ser{position:absolute;right:9px;top:8px;font:600 8.5px/1 Orbitron,sans-serif;
+   letter-spacing:.14em;color:var(--ink-4)}
+.rv{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--edge-lip);
+    box-shadow:0 1px 0 rgba(0,0,0,.7)}
+.rv.a{left:6px;top:6px}.rv.b{right:6px;top:6px}.rv.c{left:6px;bottom:6px}.rv.d{right:6px;bottom:6px}
+label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--ink-4);margin-bottom:7px;font-weight:600}
+</style>
+</head>
+<body>
+<h1>Plate model — does "dark stencil on lit face" read as GITATO?</h1>
+
+<h2>A · emissive plate (primary actions)</h2>
+<div class="bank">
+  <button class="plate">Play now</button>
+  <button class="plate mg">Insert coin</button>
+  <button class="plate yl">Download</button>
+</div>
+
+<h2>B · machined plate (default actions)</h2>
+<div class="bank">
+  <button class="mplate">Settings</button>
+  <button class="mplate">How to play</button>
+  <button class="mplate">Host online game</button>
+</div>
+
+<h2>C · what ships today, for comparison</h2>
+<div class="bank">
+  <button class="oldbtn pri">Insert coin ▸ Start</button>
+  <button class="oldbtn">How to play</button>
+  <button class="oldbtn">Settings</button>
+</div>
+
+<div class="hz"></div>
+<h2>D · cards on substrate</h2>
+<div class="cards">
+  <div class="card"><span class="rv a"></span><span class="rv b"></span><span class="rv c"></span><span class="rv d"></span>
+    <div class="lit"><span class="ser">GT-001</span><b>GITATO COMMAND</b></div>
+    <div class="bd"><p>3D multiplayer RTS in your browser. Raise a neon army.</p><span class="go">PLAY NOW ▸</span></div></div>
+  <div class="card" style="--sig-cyan:#FF2BD6"><span class="rv a"></span><span class="rv b"></span><span class="rv c"></span><span class="rv d"></span>
+    <div class="lit"><span class="ser">GT-002</span><b>BEATSURFER</b></div>
+    <div class="bd"><p>Neon-synthwave rhythm flyer. Drop in a song and surf it.</p><span class="go" style="color:#FF7BE6">PLAY ▸</span></div></div>
+  <div class="card" style="--sig-cyan:#35E08A"><span class="rv a"></span><span class="rv b"></span><span class="rv c"></span><span class="rv d"></span>
+    <div class="lit"><span class="ser">GT-003</span><b>ADDSON</b></div>
+    <div class="bd"><p>Kid-friendly modding sidekick. Finds your games, adds mods.</p><span class="go" style="color:#6FEEAE">DOWNLOAD ▸</span></div></div>
+</div>
+</body>
+</html>

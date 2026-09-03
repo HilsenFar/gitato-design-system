@@ -1,0 +1,32 @@
+/* GITATO typography.
+   Orbitron  — logotypes / big display ("BEATSURFER", forge titles)
+   Rajdhani  — game-surface UI text (buttons, HUD, panels)
+   Segoe UI  — hub + app surfaces (gitato.net, MedieStudio, AddSon, Hector) */
+
+:root {
+  --font-display: "Orbitron", "Segoe UI", system-ui, sans-serif;
+  --font-game: "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --font-app: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* letterspacing scale — the brand's defining type move */
+  --track-tagline: 0.32em;   /* uppercase taglines under logos */
+  --track-heading: 0.22em;   /* panel h2 */
+  --track-button: 0.18em;    /* uppercase buttons */
+  --track-label: 0.1em;      /* small labels, stats */
+  --track-logo: 0.16em;      /* Orbitron logotype */
+
+  /* size scale (px, from shipped CSS) */
+  --text-logo-big: 78px;
+  --text-logo: 42px;
+  --text-panel-title: 20px;
+  --text-button: 14px;
+  --text-body: 13px;
+  --text-sub: 13px;
+  --text-tagline: 12px;
+  --text-legal: 10.5px;
+
+  /* weights */
+  --weight-logo: 800;
+  --weight-heavy: 900;
+  --weight-button: 700;
+}

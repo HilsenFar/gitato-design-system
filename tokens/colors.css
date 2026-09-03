@@ -1,0 +1,122 @@
+/* ============================================================
+   GITATO color system.
+   Base scope (:root) = the umbrella brand (gitato.net hub + game surfaces):
+   near-black indigo dark, translucent panels, violet-tint hairlines,
+   neon accents with glow.
+   Product scopes override the semantic aliases. Values are copied
+   verbatim from the shipped CSS of each product.
+   ============================================================ */
+
+:root {
+  /* --- base darks (hub: gitato-deploy/hub/index.html) --- */
+  --bg-0: #05060d;            /* page background */
+  --bg-veil: rgba(8, 14, 24, .82);  /* screen-overlay radial center */
+  --panel: rgba(12, 14, 28, .7);    /* translucent panel fill */
+  --line: rgba(140, 150, 255, .16); /* violet-tint hairline */
+  --line-hover: rgba(140, 150, 255, .55);
+
+  /* --- ink --- */
+  --ink: #eef0ff;
+  --dim: #8b90b3;
+  --faint: #565b7d;
+
+  /* --- neon accents --- */
+  --violet: #7c6cff;          /* hub glow */
+  --cyan: #19e0ff;            /* game primary neon */
+  --magenta: #ff2bd6;         /* game secondary neon */
+  --red: #ff2b4e;             /* danger / energy */
+  --accent-red: #ff4d6d;      /* hub accent */
+  --gold: #ffd76e;            /* CTA text, score */
+  --gold-game: #ffe08a;
+  --green: #7cffb0;           /* download/apk affordances (#5fe0a0 on beatsurfer) */
+
+  /* --- semantic aliases --- */
+  --text-body: var(--ink);
+  --text-dim: var(--dim);
+  --text-faint: var(--faint);
+  --surface-page: var(--bg-0);
+  --surface-card: var(--panel);
+  --border-card: var(--line);
+  --accent-primary: var(--violet);
+  --accent-cta: var(--gold);
+  --status-ok: #4fd08a;
+  --status-warn: #ffb14f;
+  --status-err: #ff5f56;
+}
+
+/* --- BeatSurfer (gitato-deploy/beatsurfer/css/style.css) --- */
+.theme-beatsurfer {
+  --bg-0: #08010f;
+  --ink: #eafcff;
+  --magenta: #ff2e9a;
+  --cyan: #29d3ff;
+  --orange: #ff7a1a;
+  --green: #49f08a;
+  --violet: #9a6bff;
+  --panel: rgba(18, 6, 38, .72);
+  --line: rgba(120, 80, 200, .35);
+  --dim: #bca9e6;
+  --faint: #6b5a93;
+  --accent-primary: var(--magenta);
+}
+
+/* --- GITATO the game (gitato-deploy/game/style.css) --- */
+.theme-game {
+  --bg-0: #04060a;
+  --ink: #eaf6ff;
+  --cyan: #19e0ff;
+  --magenta: #ff2bd6;
+  --red: #ff2b4e;
+  --gold: #ffe08a;
+  --panel: rgba(10, 18, 30, .7);
+  --line: rgba(25, 224, 255, .4);
+  --accent-primary: var(--cyan);
+}
+
+/* --- FrequencyPilot (gitato-deploy/frequencypilot/index.html) --- */
+.theme-frequencypilot {
+  --bg-0: #050510;
+  --cyan: #00ffdc;
+  --magenta: #ff28b4;
+  --orange: #ff9628;
+  --green: #50dc78;
+  --ink: #d8dcea;
+  --dim: #8a90a8;
+  --panel: #0c0c24;
+  --line: #1c1c40;
+  --accent-primary: var(--cyan);
+}
+
+/* --- MedieStudio, pro dark app (gitato-deploy/mediestudio/index.html) --- */
+.theme-mediestudio {
+  --bg-0: #0d0f13;
+  --panel: #151821;
+  --panel-2: #1b1f2b;
+  --panel-3: #232838;
+  --line: #2a3040;
+  --ink: #e8ecf4;
+  --dim: #8b93a7;
+  --faint: #586074;
+  --acc: #4f8cff;
+  --acc-2: #7fb0ff;
+  --status-warn: #ffb14f;
+  --status-err: #ff5f56;
+  --status-ok: #4fd08a;
+  --accent-primary: var(--acc);
+}
+
+/* --- AddSon, kid-friendly (gitato-deploy/addson/index.html) --- */
+.theme-addson {
+  --bg-0: #0e1230;
+  --bg-2: #171c44;
+  --panel: #1e2452;
+  --ink: #f4f6ff;
+  --dim: #aeb6e8;
+  --sun: #ffd54d;
+  --mint: #5fe0a0;
+  --sky: #5bd0f0;
+  --pink: #ff7bb0;
+  --purple: #b69cff;
+  --line: rgba(255, 255, 255, .07);
+  --accent-primary: var(--sun);
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GITATO icon sprite v2 — proof sheet</title>
+<style>
+  body { margin:0; padding:32px; background:#05060d; color:#eef0ff;
+         font:13px/1.4 "Segoe UI", system-ui, sans-serif; }
+  h1 { font-size:15px; letter-spacing:.22em; text-transform:uppercase; color:#8b90b3;
+       font-weight:700; margin:0 0 24px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(112px,1fr)); gap:6px; }
+  .cell { display:flex; flex-direction:column; align-items:center; gap:9px;
+          padding:16px 6px 11px; border:1px solid rgba(140,150,255,.14); border-radius:10px;
+          background:rgba(12,14,28,.7); }
+  .cell svg { width:28px; height:28px; color:#eef0ff; }
+  .cell code { font-size:9.5px; color:#8b90b3; letter-spacing:.02em; word-break:break-all;
+               text-align:center; font-family:ui-monospace,Consolas,monospace; }
+  /* size + colour stress test */
+  .strip { display:flex; align-items:center; gap:22px; margin:30px 0 8px; padding:18px 20px;
+           border:1px solid rgba(140,150,255,.14); border-radius:10px; background:rgba(12,14,28,.7); }
+  .strip svg { color:#eef0ff; }
+  .s12{width:12px;height:12px} .s16{width:16px;height:16px} .s20{width:20px;height:20px}
+  .s24{width:24px;height:24px} .s32{width:32px;height:32px} .s48{width:48px;height:48px}
+  .cy{color:#19e0ff} .mg{color:#ff2bd6} .gd{color:#ffd76e} .gr{color:#7cffb0}
+  /* optical-alignment check: icon next to text at the same font-size */
+  .inline { margin-top:14px; font-size:15px; display:flex; gap:26px; flex-wrap:wrap; }
+  .inline span { display:inline-flex; align-items:center; gap:7px; }
+  .inline svg { width:1em; height:1em; }
+</style>
+</head>
+<body>
+<h1>GITATO icon sprite v2 — proof sheet</h1>
+<div class="strip">
+  <svg class="s12"><use href="icons.svg#gi-save"/></svg>
+  <svg class="s16"><use href="icons.svg#gi-save"/></svg>
+  <svg class="s20"><use href="icons.svg#gi-save"/></svg>
+  <svg class="s24"><use href="icons.svg#gi-save"/></svg>
+  <svg class="s32"><use href="icons.svg#gi-save"/></svg>
+  <svg class="s48"><use href="icons.svg#gi-save"/></svg>
+  <svg class="s32 cy"><use href="icons.svg#gi-crystal"/></svg>
+  <svg class="s32 mg"><use href="icons.svg#gi-bolt"/></svg>
+  <svg class="s32 gd"><use href="icons.svg#gi-star"/></svg>
+  <svg class="s32 gr"><use href="icons.svg#gi-check-circle"/></svg>
+</div>
+<div class="inline">
+  <span><svg><use href="icons.svg#gi-folder-open"/></svg> Open folder</span>
+  <span><svg><use href="icons.svg#gi-download"/></svg> Download</span>
+  <span><svg><use href="icons.svg#gi-play"/></svg> Play</span>
+  <span><svg><use href="icons.svg#gi-gear"/></svg> Settings</span>
+  <span><svg><use href="icons.svg#gi-chevron-right"/></svg> Next</span>
+</div>
+<div class="grid" id="grid"></div>
+<script>
+fetch('icons.svg').then(r => r.text()).then(t => {
+  const ids = [...t.matchAll(/<symbol id="([^"]+)"/g)].map(m => m[1]);
+  document.getElementById('grid').innerHTML = ids.map(id =>
+    `<div class="cell"><svg><use href="icons.svg#${id}"/></svg><code>${id}</code></div>`).join('');
+  document.title = ids.length + ' icons';
+});
+</script>
+</body>
+</html>

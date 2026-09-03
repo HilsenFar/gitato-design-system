@@ -1,0 +1,25 @@
+/* GITATO spacing + layout tokens (values from shipped CSS). */
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 18px;
+  --space-5: 24px;
+  --space-6: 34px;   /* panel padding */
+  --space-7: 40px;
+  --space-8: 64px;   /* hub grid top margin */
+
+  --pad-btn: 13px 26px;        /* beatsurfer .btn */
+  --pad-btn-game: 14px 18px;   /* game .btn */
+  --pad-panel: 34px 40px;      /* .panel */
+  --pad-card-body: 20px 22px;  /* hub card body */
+
+  --menu-gap: 14px;            /* stacked menu buttons */
+  --grid-gap: 22px;            /* hub card grid */
+  --btn-min-width: 260px;      /* beatsurfer menu buttons */
+
+  --wrap-hub: 1060px;          /* hub max-width */
+  --wrap-panel: 620px;
+  --wrap-panel-wide: 960px;
+}

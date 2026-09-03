@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hub banner capture</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #111; }
+  .board { position: fixed; top: 0; left: 0; width: 1280px; height: 720px; overflow: hidden; display: none; transform-origin: 0 0; }
+  .board.on { display: block; }
+
+  /* ============ 1. BEATSURFER ============ */
+  #bs { background: #08010f; font-family: "Rajdhani", "Segoe UI", system-ui, sans-serif; color: #eafcff; }
+  #bs .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #bs .veil { position: absolute; inset: 0; background: radial-gradient(120% 90% at 32% 55%, rgba(10,2,30,.42), rgba(8,1,15,.88)); }
+  #bs .scan { position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.16) 2px 3px); mix-blend-mode: multiply; opacity: .5; }
+  #bs .inner { position: absolute; inset: 0; display: flex; align-items: center; padding: 0 84px; }
+  #bs .mark { font-size: 34px; color: #ff2e9a; text-shadow: 0 0 18px rgba(255,46,154,.65); margin-bottom: 10px; letter-spacing: .1em; }
+  #bs h1 { font-family: "Orbitron", sans-serif; font-weight: 800; letter-spacing: .16em; font-size: 92px; line-height: 1; text-shadow: 0 0 18px rgba(255,46,154,.65), 0 0 60px rgba(255,46,154,.4); }
+  #bs h1 span { color: #29d3ff; text-shadow: 0 0 18px rgba(41,211,255,.6), 0 0 60px rgba(41,211,255,.4); }
+  #bs .tag { margin-top: 22px; letter-spacing: .32em; text-transform: uppercase; font-size: 19px; color: #c9b6ff; }
+  #bs .pilot { position: absolute; right: 76px; bottom: 64px; width: 296px; height: 296px; border-radius: 12px; overflow: hidden; border: 1.5px solid rgba(41,211,255,.75); box-shadow: 0 0 34px rgba(41,211,255,.55), 0 0 90px rgba(255,46,154,.3); transform: rotate(2.5deg); }
+  #bs .pilot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #bs .pilot .pc-name { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 8px 8px; font-size: 15px; letter-spacing: .2em; text-transform: uppercase; text-align: center; background: linear-gradient(transparent, rgba(0,0,0,.85)); font-weight: 700; }
+
+  /* ============ 2. FREQUENCY PILOT ============ */
+  #fp { background: #050510; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; color: #d8dcea; }
+  #fp .grid-line { position: absolute; background: rgba(0,255,220,.14); }
+  #fp .rect { position: absolute; left: 50%; top: 55%; transform: translate(-50%,-50%); border: 2px solid rgba(0,255,220,.5); }
+  #fp .rect.r2 { border-color: rgba(0,255,220,.4); }
+  #fp .rect.r3 { border-color: rgba(0,255,220,.32); }
+  #fp .rect.r4 { border-color: rgba(0,255,220,.24); }
+  #fp .rect.r5 { border-color: rgba(0,255,220,.18); }
+  #fp .diag { position: absolute; left: 50%; top: 55%; width: 1300px; height: 1px; background: rgba(0,255,220,.16); transform-origin: 0 0; }
+  #fp .ship { position: absolute; left: 50%; top: 55%; width: 128px; height: 124px; transform: translate(-50%,-56%); background: #ff28b4; clip-path: polygon(50% 0, 88% 100%, 50% 78%, 12% 100%); filter: drop-shadow(0 0 26px rgba(255,40,180,.75)); }
+  #fp h1 { position: absolute; top: 74px; width: 100%; text-align: center; font-size: 104px; font-weight: 800; letter-spacing: .04em; color: #00ffdc; text-transform: uppercase; text-shadow: 0 0 12px rgba(0,255,220,.75), 0 0 48px rgba(0,255,220,.35); }
+  #fp .tag { position: absolute; top: 208px; width: 100%; text-align: center; font-size: 30px; }
+  #fp .tag em { color: #ff28b4; font-style: normal; text-shadow: 0 0 10px rgba(255,40,180,.6); }
+  #fp .eq { position: absolute; bottom: 0; left: 0; right: 0; height: 130px; display: flex; align-items: flex-end; gap: 6px; padding: 0 10px; }
+  #fp .eq i { flex: 1; border-radius: 2px 2px 0 0; }
+
+  /* ============ 3. ADDSON ============ */
+  #as {
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(91,208,240,.22), transparent 60%),
+      radial-gradient(800px 500px at -10% 25%, rgba(182,156,255,.20), transparent 60%),
+      radial-gradient(700px 500px at 50% 110%, rgba(95,224,160,.16), transparent 60%),
+      #0e1230;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif; color: #f4f6ff;
+  }
+  #as .deco { position: absolute; border-radius: 30%; opacity: .12; }
+  #as .inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
+  #as .logo { width: 560px; filter: drop-shadow(0 10px 30px rgba(91,208,240,.35)); }
+  #as .tag { font-size: 40px; font-weight: 700; color: #ffd54d; }
+  #as .chips { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; max-width: 980px; }
+  #as .chip { padding: 13px 24px; border-radius: 50px; font-weight: 700; font-size: 20px; color: #0b1030; box-shadow: 0 6px 16px rgba(0,0,0,.25); }
+
+  /* ============ 4. MEDIESTUDIO ============ */
+  #ms { background: #0d0f13; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; color: #e8ecf4; font-size: 15px; }
+  #ms.on { display: flex; flex-direction: column; }
+  #ms .toolbar { height: 58px; flex: none; display: flex; align-items: center; gap: 12px; padding: 0 16px; background: #151821; border-bottom: 1px solid #2a3040; }
+  #ms .mslogo { font-weight: 700; font-size: 20px; letter-spacing: .4px; color: #7fb0ff; }
+  #ms .mslogo span { color: #e8ecf4; font-weight: 400; }
+  #ms .proj { background: #1b1f2b; border: 1px solid #2a3040; border-radius: 6px; padding: 6px 14px; width: 220px; color: #e8ecf4; }
+  #ms .tbtn { background: #1b1f2b; border: 1px solid #2a3040; border-radius: 6px; padding: 7px 16px; white-space: nowrap; }
+  #ms .tbtn.acc { background: #4f8cff; border-color: #4f8cff; color: #fff; font-weight: 600; }
+  #ms .grow { flex: 1; }
+  #ms .main { flex: 1; display: grid; grid-template-columns: 250px 1fr 260px; min-height: 0; }
+  #ms .panelHead { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #2a3040; font-weight: 600; color: #8b93a7; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; }
+  #ms .bin { background: #151821; border-right: 1px solid #2a3040; }
+  #ms .binGrid { padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  #ms .mcard { background: #1b1f2b; border: 1px solid #2a3040; border-radius: 8px; overflow: hidden; position: relative; }
+  #ms .mcard.sel { border-color: #4f8cff; box-shadow: 0 0 0 1px #4f8cff; }
+  #ms .mcard .th { width: 100%; aspect-ratio: 16/10; display: block; }
+  #ms .mcard .nm { padding: 5px 7px; font-size: 11px; color: #8b93a7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #ms .mcard .dur { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,.72); border-radius: 4px; padding: 1px 6px; font-size: 11px; }
+  #ms .stage { background: #07080b; display: flex; align-items: center; justify-content: center; position: relative; }
+  #ms .cv { width: 62%; aspect-ratio: 16/9; background: linear-gradient(135deg, #1a2540 0%, #0d1322 55%, #251a3d 100%); box-shadow: 0 8px 28px rgba(0,0,0,.5); border-radius: 3px; position: relative; overflow: hidden; }
+  #ms .cv .sun { position: absolute; right: 14%; top: 16%; width: 90px; height: 90px; border-radius: 50%; background: #ffb14f; opacity: .85; filter: blur(1px); }
+  #ms .cv .hills { position: absolute; bottom: -20%; left: -10%; right: -10%; height: 60%; background: #0a1a2e; border-radius: 50% 50% 0 0; }
+  #ms .cv .cap { position: absolute; bottom: 10%; width: 100%; text-align: center; font-size: 22px; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,.8); }
+  #ms .insp { background: #151821; border-left: 1px solid #2a3040; padding-bottom: 8px; }
+  #ms .row { display: flex; align-items: center; gap: 10px; padding: 7px 14px; font-size: 13px; }
+  #ms .row label { width: 88px; flex: none; color: #8b93a7; }
+  #ms .track { height: 5px; flex: 1; border-radius: 3px; background: #2c3244; position: relative; }
+  #ms .track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: #4f8cff; }
+  #ms .track b { position: absolute; top: 50%; width: 14px; height: 14px; border-radius: 50%; background: #4f8cff; border: 2px solid #0d0f13; transform: translate(-50%,-50%); }
+  #ms .val { width: 40px; text-align: right; font-size: 12px; color: #7fb0ff; }
+  #ms .tl { flex: none; height: 208px; background: #151821; border-top: 1px solid #2a3040; position: relative; padding-top: 26px; }
+  #ms .ruler { position: absolute; top: 0; left: 64px; right: 0; height: 26px; border-bottom: 1px solid #2a3040; color: #586074; font-size: 11px; display: flex; }
+  #ms .ruler i { flex: 1; border-left: 1px solid #2a3040; padding: 5px 0 0 5px; font-style: normal; }
+  #ms .trackrow { display: flex; align-items: center; height: 52px; border-bottom: 1px solid #22283a; }
+  #ms .tlabel { width: 64px; flex: none; text-align: center; color: #8b93a7; font-size: 12px; font-weight: 600; }
+  #ms .lane { flex: 1; position: relative; height: 42px; }
+  #ms .clip { position: absolute; top: 0; bottom: 0; border-radius: 6px; font-size: 11px; color: #cfe0ff; padding: 4px 8px; overflow: hidden; white-space: nowrap; }
+  #ms .playhead { position: absolute; top: 0; bottom: 0; left: 472px; width: 2px; background: #ff5f56; z-index: 3; }
+  #ms .playhead::before { content: ""; position: absolute; top: 0; left: -6px; border: 7px solid transparent; border-top: 9px solid #ff5f56; }
+  #ms .status { flex: none; height: 30px; background: #151821; border-top: 1px solid #2a3040; display: flex; align-items: center; gap: 18px; padding: 0 16px; font-size: 12px; color: #586074; }
+  #ms .brandveil { position: absolute; inset: auto 0 0 0; height: 300px; background: linear-gradient(transparent, rgba(7,8,11,.94) 78%); z-index: 4; }
+  #ms .brand { position: absolute; left: 56px; bottom: 44px; z-index: 5; }
+  #ms .brand .word { font-size: 74px; font-weight: 700; letter-spacing: .4px; color: #7fb0ff; line-height: 1; }
+  #ms .brand .word span { color: #e8ecf4; font-weight: 300; }
+  #ms .brand .tag { margin-top: 12px; font-size: 24px; color: #8b93a7; }
+  #ms .brand .tag b { color: #4fd08a; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- BEATSURFER -->
+<div class="board on" id="bs">
+  <img class="bg" src="../assets/beatsurfer/bg_title.webp" alt="">
+  <div class="veil"></div>
+  <div class="inner">
+    <div>
+      <div class="mark">◣◢</div>
+      <h1>BEAT<br><span>SURFER</span></h1>
+      <p class="tag">surf the stems<br>one song · four instruments</p>
+    </div>
+  </div>
+  <div class="pilot">
+    <img src="../assets/beatsurfer/pilot_vael.webp" alt="">
+    <div class="pc-name">VAEL · ACE PILOT</div>
+  </div>
+  <div class="scan"></div>
+</div>
+
+<!-- FREQUENCY PILOT -->
+<div class="board" id="fp">
+  <div class="grid-line" style="left:0;right:0;top:55%;height:1px;"></div>
+  <div class="grid-line" style="top:0;bottom:0;left:50%;width:1px;"></div>
+  <div class="diag" style="transform:rotate(14deg)"></div>
+  <div class="diag" style="transform:rotate(166deg)"></div>
+  <div class="diag" style="transform:rotate(-14deg)"></div>
+  <div class="diag" style="transform:rotate(194deg)"></div>
+  <div class="rect r5" style="width:1130px;height:560px"></div>
+  <div class="rect r4" style="width:860px;height:430px"></div>
+  <div class="rect r3" style="width:620px;height:315px"></div>
+  <div class="rect r2" style="width:420px;height:218px"></div>
+  <div class="rect" style="width:250px;height:132px"></div>
+  <div class="rect" style="width:120px;height:64px;border-color:rgba(0,255,220,.65)"></div>
+  <div class="ship"></div>
+  <h1>Frequency Pilot</h1>
+  <p class="tag">One song. Four frequency levels. <em>Dodge the music.</em></p>
+  <div class="eq" id="fpEq"></div>
+</div>
+
+<!-- ADDSON -->
+<div class="board" id="as">
+  <div class="deco" style="width:190px;height:190px;background:#ffd54d;top:8%;left:-40px;transform:rotate(15deg)"></div>
+  <div class="deco" style="width:150px;height:150px;background:#ff7bb0;top:52%;right:-34px;transform:rotate(-10deg)"></div>
+  <div class="deco" style="width:110px;height:110px;background:#5fe0a0;top:74%;left:7%;transform:rotate(24deg)"></div>
+  <div class="deco" style="width:90px;height:90px;background:#5bd0f0;top:12%;right:14%;transform:rotate(-18deg)"></div>
+  <div class="inner">
+    <img class="logo" src="../assets/addson/addson_logo.png" alt="AddSon">
+    <p class="tag">Put cool stuff in your games!</p>
+    <div class="chips">
+      <span class="chip" style="background:#5bd0f0">Minecraft (Bedrock)</span>
+      <span class="chip" style="background:#5bc8e8">Subnautica</span>
+      <span class="chip" style="background:#5fe0a0">Jurassic World Evolution 2</span>
+      <span class="chip" style="background:#b69cff">The Planet Crafter</span>
+      <span class="chip" style="background:#7ac6ff">Cities: Skylines</span>
+      <span class="chip" style="background:#8ad8ff">Spore</span>
+    </div>
+  </div>
+</div>
+
+<!-- MEDIESTUDIO -->
+<div class="board" id="ms">
+  <div class="toolbar">
+    <div class="mslogo">Medie<span>Studio</span></div>
+    <div class="proj">Sommerferie 2026</div>
+    <div class="tbtn">📁 Importér</div>
+    <div class="tbtn">Gem</div>
+    <div class="grow"></div>
+    <div class="tbtn">Fortryd</div>
+    <div class="tbtn acc">Eksportér MP4</div>
+  </div>
+  <div class="main">
+    <div class="bin">
+      <div class="panelHead">Medier</div>
+      <div class="binGrid">
+        <div class="mcard sel"><div class="th" style="background:linear-gradient(135deg,#1a2540,#251a3d)"></div><div class="nm">strand.mp4</div><div class="dur">0:42</div></div>
+        <div class="mcard"><div class="th" style="background:linear-gradient(135deg,#12301f,#0d1f2c)"></div><div class="nm">skov.mp4</div><div class="dur">1:18</div></div>
+        <div class="mcard"><div class="th" style="background:linear-gradient(135deg,#3d2a12,#2c1420)"></div><div class="nm">solnedgang.jpg</div><div class="dur">FOTO</div></div>
+        <div class="mcard"><div class="th" style="background:linear-gradient(135deg,#101828,#1f2c3c)"></div><div class="nm">musik.mp3</div><div class="dur">2:31</div></div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="cv">
+        <div class="sun"></div>
+        <div class="hills"></div>
+        <div class="cap">Sommerferie 2026</div>
+      </div>
+    </div>
+    <div class="insp">
+      <div class="panelHead">Egenskaber</div>
+      <div class="row"><label>Lydstyrke</label><div class="track"><i style="width:72%"></i><b style="left:72%"></b></div><div class="val">72%</div></div>
+      <div class="row"><label>Skalering</label><div class="track"><i style="width:50%"></i><b style="left:50%"></b></div><div class="val">100%</div></div>
+      <div class="row"><label>Tonefald</label><div class="track"><i style="width:30%"></i><b style="left:30%"></b></div><div class="val">-2</div></div>
+    </div>
+  </div>
+  <div class="tl">
+    <div class="ruler"><i>0:00</i><i>0:10</i><i>0:20</i><i>0:30</i><i>0:40</i><i>0:50</i><i>1:00</i></div>
+    <div class="playhead"></div>
+    <div class="trackrow"><div class="tlabel">V1</div><div class="lane">
+      <div class="clip" style="left:0;width:34%;background:#2d4a7a">strand.mp4</div>
+      <div class="clip" style="left:35%;width:28%;background:#2d4a7a;border:1px solid #4f8cff;box-shadow:0 0 0 1px #4f8cff">skov.mp4</div>
+      <div class="clip" style="left:64%;width:20%;background:#2d4a7a">solnedgang.jpg</div>
+    </div></div>
+    <div class="trackrow"><div class="tlabel">TXT</div><div class="lane">
+      <div class="clip" style="left:6%;width:16%;background:#7a5a2d">Titel: Sommer</div>
+      <div class="clip" style="left:40%;width:22%;background:#2d7a5a">Undertekst</div>
+    </div></div>
+    <div class="trackrow"><div class="tlabel">A1</div><div class="lane">
+      <div class="clip" style="left:0;width:84%;background:#22402e">musik.mp3 ♪</div>
+    </div></div>
+  </div>
+  <div class="status"><span>● Klar</span><span>1920×1080 · 30 fps</span><span>Alt bliver på din maskine</span></div>
+  <div class="brandveil"></div>
+  <div class="brand">
+    <div class="word">Medie<span>Studio</span></div>
+    <div class="tag">Videoredigering i browseren — <b>alt bliver på din maskine</b></div>
+  </div>
+</div>
+
+<script>
+  // FrequencyPilot EQ bars — four band-colored sections like the shipped og-cover
+  (function () {
+    const eq = document.getElementById("fpEq");
+    const bands = [
+      { c: "#00ffdc", n: 14 }, { c: "#50dc78", n: 14 }, { c: "#ff9628", n: 14 }, { c: "#ff28b4", n: 14 },
+    ];
+    let seed = 7;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    for (const b of bands) {
+      for (let i = 0; i < b.n; i++) {
+        const el = document.createElement("i");
+        el.style.background = b.c;
+        el.style.height = Math.round(18 + rnd() * 100) + "px";
+        eq.appendChild(el);
+      }
+    }
+  })();
+  // capture helper: show one board, scale to fit viewport
+  window.showBoard = function (id, scale) {
+    document.querySelectorAll(".board").forEach((b) => b.classList.remove("on"));
+    const el = document.getElementById(id);
+    el.classList.add("on");
+    const s = scale ?? Math.min(1, innerWidth / 1280, innerHeight / 720);
+    el.style.transform = "scale(" + s + ")";
+  };
+  // headless capture: ?board=bs|fp|as|ms selects a board at scale(1)
+  (function () {
+    const b = new URLSearchParams(location.search).get("board");
+    if (b) window.showBoard(b, 1);
+  })();
+</script>
+</body>
+</html>

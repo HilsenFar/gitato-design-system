@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>icon zoom</title>
+<style>
+  body { margin:0; padding:26px; background:#05060d; color:#eef0ff;
+         font:12px/1.4 "Segoe UI", system-ui, sans-serif; }
+  .grid { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
+  .cell { display:flex; flex-direction:column; align-items:center; gap:8px; padding:14px 6px 10px;
+          border:1px solid rgba(140,150,255,.16); border-radius:10px; background:rgba(12,14,28,.7); }
+  .cell svg { width:96px; height:96px; color:#eef0ff; }
+  .cell code { font-size:10px; color:#8b90b3; font-family:ui-monospace,Consolas,monospace; }
+</style>
+</head>
+<body>
+<div class="grid" id="g"></div>
+<script>
+const ids = new URLSearchParams(location.search).get('ids');
+document.getElementById('g').innerHTML = (ids ? ids.split(',') : []).map(id =>
+  `<div class="cell"><svg><use href="icons.svg#${id}"/></svg><code>${id}</code></div>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GITATO cover boards v2</title>
+<link rel="stylesheet" href="gitato-ds.css">
+<style>
+  /* 1280x720 boards for the hub cards. Render with headless Chrome at
+     --window-size=1280,720 and ?board=<key>.
+     These exist because two of the shipped covers were screenshots of an app UI,
+     and app UI does not survive being scaled down to a 380px-wide card - the
+     RTS cover was an unreadable menu and MedieStudio's was an unreadable editor. */
+  html,body{margin:0;background:#000}
+  .board{position:relative;width:1280px;height:720px;overflow:hidden;display:none;
+         background:var(--gt-sub-0);font-family:var(--gt-font-ui);color:var(--gt-ink-1)}
+  .board.on{display:block}
+  .bg{position:absolute;inset:0}
+  .grain{position:absolute;inset:0;background-image:var(--gt-grain);background-size:140px 140px;
+         opacity:.10;mix-blend-mode:overlay}
+  .vig{position:absolute;inset:0;background:radial-gradient(120% 92% at 50% 34%,transparent 44%,rgba(2,3,8,.72) 100%)}
+  .plate{position:absolute;left:74px;top:0;bottom:0;display:flex;flex-direction:column;
+         justify-content:center;gap:20px;z-index:5;max-width:640px}
+  .eyebrow{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;
+           letter-spacing:var(--gt-track-tag);text-transform:uppercase;color:var(--gt-sig-ink)}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--gt-sig);
+                box-shadow:0 0 12px var(--gt-sig)}
+  /* Sized for the primary use: a ~380px-wide hub card, i.e. shown at 30% scale.
+     The title has to carry alone at that size, so it is deliberately oversized;
+     the paragraph is for the 1280x720 og:image, where it is readable. */
+  h1{margin:0;font-size:96px;font-weight:700;line-height:.94;letter-spacing:var(--gt-track-hero);
+     text-transform:uppercase}
+  h1 em{font-style:normal;color:var(--gt-sig-ink)}
+  .sub{margin:0;font-family:var(--gt-font-body);font-size:22px;line-height:1.45;
+       color:var(--gt-ink-3);max-width:540px}
+  .meta{display:flex;gap:10px;margin-top:6px}
+  .hz{position:absolute;left:0;right:0;bottom:0;height:10px}
+  .rail{position:absolute;left:52px;top:96px;bottom:96px;width:3px;
+        background:linear-gradient(180deg,var(--gt-sig),transparent)}
+  .ser{position:absolute;right:32px;top:26px;font-family:var(--gt-font-mono);font-size:15px;
+       letter-spacing:.16em;color:var(--gt-ink-3)}
+  .corner{position:absolute;width:28px;height:28px;border:2px solid var(--gt-edge-bezel)}
+  .corner.tl{left:26px;top:26px;border-right:0;border-bottom:0}
+  .corner.br{right:26px;bottom:26px;border-left:0;border-top:0}
+
+  /* ---- RTS board: hex field receding to the right ---- */
+  #rts .bg{background:
+      radial-gradient(680px 520px at 82% 42%, color-mix(in srgb,var(--gt-sig) 26%,transparent), transparent 66%),
+      radial-gradient(560px 460px at 12% 108%, rgba(255,43,214,.13), transparent 62%),
+      var(--gt-sub-0)}
+  .hexfield{position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+            display:grid;grid-template-columns:repeat(5,86px);gap:12px;opacity:.9}
+  .hexfield i{display:block;width:86px;height:96px;
+    clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+    background:linear-gradient(160deg,var(--gt-pl-3),var(--gt-pl-1));
+    box-shadow:inset 0 1px 0 var(--gt-lip)}
+  .hexfield i.lit{background:linear-gradient(160deg,var(--gt-sig),var(--gt-sig-dk));
+                  box-shadow:0 0 28px -6px var(--gt-sig)}
+  .hexfield i.dim{opacity:.4}
+
+  /* ---- MedieStudio board: timeline tracks ---- */
+  #ms .bg{background:
+      radial-gradient(720px 520px at 78% 30%, color-mix(in srgb,var(--gt-sig) 20%,transparent), transparent 64%),
+      radial-gradient(520px 420px at 8% 110%, rgba(255,138,31,.12), transparent 60%),
+      var(--gt-sub-0)}
+  .tl{position:absolute;right:56px;top:50%;transform:translateY(-50%);
+      width:520px;display:flex;flex-direction:column;gap:12px}
+  .tl .trk{height:56px;border-radius:var(--gt-r-2);background:var(--gt-void);
+           border:1px solid var(--gt-edge-hair);position:relative;overflow:hidden;
+           box-shadow:inset 0 2px 6px rgba(0,0,0,.75)}
+  .tl .clip{position:absolute;top:7px;bottom:7px;border-radius:3px;
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+  .tl .ph{position:absolute;top:-8px;bottom:-8px;width:2px;background:var(--gt-red);
+          box-shadow:0 0 10px var(--gt-red);left:214px;z-index:4}
+
+  /* ---- RL boards (3/9): the three RL covers were app screenshots, same
+     failure as RTS/MedieStudio. All three share the rltracker theme (cyan). ---- */
+  .rlbg{background:
+      radial-gradient(720px 520px at 80% 36%, color-mix(in srgb,var(--gt-sig) 22%,transparent), transparent 64%),
+      radial-gradient(520px 420px at 8% 110%, rgba(255,158,44,.12), transparent 60%),
+      var(--gt-sub-0)}
+
+  /* RL Live Tracker: three habit meters, today vs baseline tick */
+  .meters{position:absolute;right:64px;top:50%;transform:translateY(-50%);
+          width:500px;display:flex;flex-direction:column;gap:26px}
+  .meters .row{display:flex;flex-direction:column;gap:9px}
+  .meters .lbl{display:flex;justify-content:space-between;font-size:15px;font-weight:600;
+               letter-spacing:var(--gt-track-tag);text-transform:uppercase;color:var(--gt-ink-3)}
+  .meters .lbl b{font-family:var(--gt-font-mono);font-weight:600;color:var(--gt-sig-ink)}
+  .meters .bar{position:relative;height:18px;border-radius:9px;background:var(--gt-void);
+               border:1px solid var(--gt-edge-hair);box-shadow:inset 0 2px 6px rgba(0,0,0,.75)}
+  .meters .fill{position:absolute;inset:0 auto 0 0;border-radius:9px;
+                background:linear-gradient(90deg,color-mix(in srgb,var(--gt-sig) 55%,transparent),var(--gt-sig));
+                box-shadow:0 0 18px -4px var(--gt-sig)}
+  .meters .tick{position:absolute;top:-8px;bottom:-8px;width:3px;background:var(--gt-ink-3)}
+
+  /* RL Rank Overlay: a lobby, six rows, two teams */
+  .lobby{position:absolute;right:64px;top:50%;transform:translateY(-50%);
+         width:470px;display:flex;flex-direction:column;gap:10px}
+  .lobby .p{display:flex;align-items:center;gap:16px;height:58px;padding:0 18px;
+            border-radius:var(--gt-r-2);background:var(--gt-void);border:1px solid var(--gt-edge-hair);
+            box-shadow:inset 0 2px 6px rgba(0,0,0,.75)}
+  .lobby .p.t2{border-left:3px solid #FF9E2C}
+  .lobby .p.t1{border-left:3px solid #38B6FF}
+  .lobby .em{width:34px;height:34px;border-radius:50%;flex:none;
+             box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 14px -4px currentColor}
+  .lobby .nm{flex:1;height:12px;border-radius:6px;background:var(--gt-pl-3);opacity:.7}
+  .lobby .mmr{font-family:var(--gt-font-mono);font-size:17px;letter-spacing:.06em;color:var(--gt-ink-2)}
+  .lobby .div{font-size:13px;font-weight:600;letter-spacing:var(--gt-track-tag);color:var(--gt-ink-3)}
+  .lobby .gap{height:6px}
+
+  /* RL Roll: one big die mid-roll, two behind it */
+  .dice{position:absolute;right:120px;top:50%;transform:translateY(-50%);width:420px;height:420px}
+  .die{position:absolute;border-radius:36px;
+       background:linear-gradient(160deg,var(--gt-pl-3),var(--gt-pl-1));
+       box-shadow:inset 0 1px 0 var(--gt-lip),0 30px 60px -20px rgba(0,0,0,.9);
+       display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:14%;gap:6%}
+  .die i{display:block;border-radius:50%;background:var(--gt-sig);box-shadow:0 0 16px -2px var(--gt-sig);visibility:hidden}
+  .die.main{width:260px;height:260px;left:100px;top:80px;transform:rotate(-14deg)}
+  .die.back{width:160px;height:160px;left:0;top:250px;transform:rotate(22deg);opacity:.45;border-radius:24px}
+  .die.back2{width:120px;height:120px;left:300px;top:20px;transform:rotate(38deg);opacity:.3;border-radius:18px}
+  .die.f5 i:nth-child(1),.die.f5 i:nth-child(3),.die.f5 i:nth-child(5),.die.f5 i:nth-child(7),.die.f5 i:nth-child(9){visibility:visible}
+  .die.f3 i:nth-child(1),.die.f3 i:nth-child(5),.die.f3 i:nth-child(9){visibility:visible}
+  .die.f2 i:nth-child(3),.die.f2 i:nth-child(7){visibility:visible}
+</style>
+</head>
+<body>
+
+<!-- ═══ GITATO COMMAND ═══ -->
+<div class="board" id="rts" data-gt="rts">
+  <div class="bg"></div>
+  <div class="hexfield">
+    <i></i><i class="lit"></i><i class="dim"></i><i></i><i class="dim"></i>
+    <i class="dim"></i><i></i><i class="lit"></i><i class="dim"></i><i></i>
+    <i></i><i class="dim"></i><i></i><i class="dim"></i><i class="dim"></i>
+    <i class="dim"></i><i></i><i class="dim"></i><i></i><i class="dim"></i>
+  </div>
+  <div class="vig"></div>
+  <div class="rail"></div>
+  <div class="plate">
+    <div class="eyebrow"><span class="dot"></span>3D multiplayer RTS</div>
+    <h1>Gitato<br><em>Command</em></h1>
+    <p class="sub">Harvest crystals, raise a neon army, crush the enemy HQ. Play a friend with a 4-letter room code — or fight the AI.</p>
+    <div class="meta">
+      <span class="gt-chip">Browser</span>
+      <span class="gt-chip">1v1 online</span>
+      <span class="gt-chip">vs AI</span>
+      <span class="gt-chip">Free</span>
+    </div>
+  </div>
+  <span class="corner tl"></span><span class="corner br"></span>
+  <span class="ser">GT-001 · RTS</span>
+  <div class="hz gt-hazard gt-hazard--inert"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- ═══ MEDIESTUDIO ═══ -->
+<div class="board" id="ms" data-gt="mediestudio">
+  <div class="bg"></div>
+  <div class="tl">
+    <div class="trk"><span class="clip" style="left:14px;width:186px;background:linear-gradient(180deg,#2E7FE8,#1B4F94)"></span>
+                     <span class="clip" style="left:212px;width:242px;background:linear-gradient(180deg,#19E0FF,#0A7E93)"></span></div>
+    <div class="trk"><span class="clip" style="left:66px;width:128px;background:linear-gradient(180deg,#FF8A1F,#944D0F)"></span>
+                     <span class="clip" style="left:206px;width:96px;background:linear-gradient(180deg,#FFC53D,#8F6C18)"></span></div>
+    <div class="trk"><span class="clip" style="left:118px;width:302px;background:linear-gradient(180deg,#35E08A,#197F4C)"></span></div>
+    <div class="trk"><span class="clip" style="left:24px;width:74px;background:linear-gradient(180deg,#B44DFF,#662A94)"></span>
+                     <span class="clip" style="left:108px;width:180px;background:linear-gradient(180deg,#FF2BD6,#93187B)"></span></div>
+    <span class="ph"></span>
+  </div>
+  <div class="vig"></div>
+  <div class="rail"></div>
+  <div class="plate">
+    <div class="eyebrow"><span class="dot"></span>Video editor · in your browser</div>
+    <h1>Medie<em>Studio</em></h1>
+    <p class="sub">Cut, trim, caption and export MP4 — everything stays on your machine. Nothing is uploaded, ever.</p>
+    <div class="meta">
+      <span class="gt-chip">No upload</span>
+      <span class="gt-chip">MP4 export</span>
+      <span class="gt-chip">PWA</span>
+      <span class="gt-chip">Windows app</span>
+    </div>
+  </div>
+  <span class="corner tl"></span><span class="corner br"></span>
+  <span class="ser">GT-007 · EDIT</span>
+  <div class="hz gt-hazard gt-hazard--inert"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- ═══ RL LIVE TRACKER ═══ -->
+<div class="board" id="rltracker" data-gt="rltracker">
+  <div class="bg rlbg"></div>
+  <div class="meters">
+    <div class="row"><span class="lbl"><span>Kickoff first touch</span><b>4 / 7</b></span>
+      <span class="bar"><span class="fill" style="width:58%"></span><span class="tick" style="left:41%"></span></span></div>
+    <div class="row"><span class="lbl"><span>Boost discipline</span><b>+9 %</b></span>
+      <span class="bar"><span class="fill" style="width:72%"></span><span class="tick" style="left:63%"></span></span></div>
+    <div class="row"><span class="lbl"><span>Touch power</span><b>−4 %</b></span>
+      <span class="bar"><span class="fill" style="width:44%"></span><span class="tick" style="left:48%"></span></span></div>
+  </div>
+  <div class="vig"></div>
+  <div class="rail"></div>
+  <div class="plate">
+    <div class="eyebrow"><span class="dot"></span>Rocket League · live coach</div>
+    <h1>RL Live<br><em>Tracker</em></h1>
+    <p class="sub">Reads the game's official Stats API while you play and coaches you one focus at a time. Your data stays on your PC.</p>
+    <div class="meta">
+      <span class="gt-chip">Windows</span>
+      <span class="gt-chip">Free</span>
+      <span class="gt-chip">No account</span>
+      <span class="gt-chip">Open source</span>
+    </div>
+  </div>
+  <span class="corner tl"></span><span class="corner br"></span>
+  <span class="ser">GT-008 · COACH</span>
+  <div class="hz gt-hazard gt-hazard--inert"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- ═══ RL RANK OVERLAY ═══ -->
+<div class="board" id="rankoverlay" data-gt="rltracker">
+  <div class="bg rlbg"></div>
+  <div class="lobby">
+    <div class="p t1"><span class="em" style="background:linear-gradient(160deg,#B44DFF,#662A94);color:#B44DFF"></span><span class="nm"></span><span class="div">Div III</span><span class="mmr">1284</span></div>
+    <div class="p t1"><span class="em" style="background:linear-gradient(160deg,#B44DFF,#662A94);color:#B44DFF"></span><span class="nm" style="width:40%"></span><span class="div">Div I</span><span class="mmr">1241</span></div>
+    <div class="p t1"><span class="em" style="background:linear-gradient(160deg,#19E0FF,#0A7E93);color:#19E0FF"></span><span class="nm"></span><span class="div">Div IV</span><span class="mmr">1198</span></div>
+    <div class="gap"></div>
+    <div class="p t2"><span class="em" style="background:linear-gradient(160deg,#B44DFF,#662A94);color:#B44DFF"></span><span class="nm"></span><span class="div">Div II</span><span class="mmr">1262</span></div>
+    <div class="p t2"><span class="em" style="background:linear-gradient(160deg,#19E0FF,#0A7E93);color:#19E0FF"></span><span class="nm"></span><span class="div">Div III</span><span class="mmr">1176</span></div>
+    <div class="p t2"><span class="em" style="background:linear-gradient(160deg,#19E0FF,#0A7E93);color:#19E0FF"></span><span class="nm" style="width:35%"></span><span class="div">Div I</span><span class="mmr">1143</span></div>
+  </div>
+  <div class="vig"></div>
+  <div class="rail"></div>
+  <div class="plate">
+    <div class="eyebrow"><span class="dot"></span>Rocket League · in-game overlay</div>
+    <h1>RL Rank<br><em>Overlay</em></h1>
+    <p class="sub">Every player's rank in your live lobby: emblems, divisions and MMR for both teams. Hides itself when the game closes.</p>
+    <div class="meta">
+      <span class="gt-chip">Windows</span>
+      <span class="gt-chip">Open source</span>
+      <span class="gt-chip">No account</span>
+      <span class="gt-chip">Free</span>
+    </div>
+  </div>
+  <span class="corner tl"></span><span class="corner br"></span>
+  <span class="ser">GT-009 · LOBBY</span>
+  <div class="hz gt-hazard gt-hazard--inert"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- ═══ RL ROLL ═══ -->
+<div class="board" id="roll" data-gt="rltracker">
+  <div class="bg rlbg"></div>
+  <div class="dice">
+    <div class="die back f3"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="die back2 f2"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="die main f5"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="vig"></div>
+  <div class="rail"></div>
+  <div class="plate">
+    <div class="eyebrow"><span class="dot"></span>Rocket League · training packs</div>
+    <h1>RL <em>Roll</em></h1>
+    <p class="sub">Can't decide what to practice? Roll a random training pack. Filter by category, difficulty or rating.</p>
+    <div class="meta">
+      <span class="gt-chip">Browser</span>
+      <span class="gt-chip">Free</span>
+      <span class="gt-chip">Thousands of packs</span>
+    </div>
+  </div>
+  <span class="corner tl"></span><span class="corner br"></span>
+  <span class="ser">GT-010 · ROLL</span>
+  <div class="hz gt-hazard gt-hazard--inert"></div>
+  <div class="grain"></div>
+</div>
+
+<script>
+  const k = new URLSearchParams(location.search).get('board') || 'rts';
+  const el = document.getElementById(k);
+  if (el) el.classList.add('on');
+</script>
+</body>
+</html>
