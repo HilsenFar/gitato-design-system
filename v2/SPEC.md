@@ -39,6 +39,7 @@ er både det mere autentiske udtryk og det eneste tilgængelige.
 | Fil | Rolle |
 |---|---|
 | `gitato-ds.css` | Hele systemet. Kopieres som `ds.css` ind i hver flades mappe. |
+| `gitato-fonts.css` + `fonts/` | **v2.1:** selvhostede fonte (Orbitron 800, Chakra Petch 500-700, Barlow 400-700, latin, ~150 kB i alt) + OFL-licenser. Kopieres som `fonts.css` + `fonts/`. |
 | `icons.svg` | 76 originale ikoner, `gi-*`. Kopieres med. |
 | `gallery.html` | Levende komponent-galleri med temavælger. Kontrolleret 2/9-2026 i alle 10 temaer: 0 aktiverede tekstelementer under AA, laveste forhold 5.08:1 (se afsnit D). |
 | `icons-preview.html` | Ikon-korrekturark. |
@@ -47,8 +48,19 @@ er både det mere autentiske udtryk og det eneste tilgængelige.
 Indsæt **før** fladens egne styles, så fladen kan overskrive:
 
 ```html
+<link rel="preload" href="fonts/chakra-petch-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="ds.css">
 ```
+
+**v2.1 (22/9-2026): Google Fonts er ude.** v2.0 havde en `@import` af Google Fonts
+øverst i `gitato-ds.css`. Den blokerede rendering (browseren finder den først, når
+ds.css er hentet) og sendte hver besøgendes IP til Google før første glyf. Nu
+ligger fontene på fladens egen origin. **Opdaterer en flade sin ds.css til v2.1,
+SKAL den også have `fonts.css` + `fonts/` med** — ellers falder den tilbage til
+systemfonte (intet går i stykker, men det ser generisk ud). Orbitron findes kun i
+800; `@font-face` erklærer den som `700 900`, så logotypens 900 bruger den ægte
+800-kontur i stedet for en syntetisk fed.
 
 Sæt temaet på `<body>`: `<body data-gt="hub">` (eller `game`, `rts`, `beatsurfer`,
 `frequencypilot`, `addson`, `mediestudio`, `sprunkiverse`, `hector`, `rltracker`).
