@@ -97,6 +97,9 @@ selvhostet variabel **Archivo** (wdth 62-125) i UI og brødtekst, Orbitron kun i
 GITATO-mærket. Deres stadium-night-tokens (`--st-*`) må bære tekst når kontrasten er
 målt ≥ 4,5:1. Chakra Petch/Barlow gælder for hub, spillene, MedieStudio, AddSon og
 Frequency Pilot.
+Den bindende kontrakt for RL-familiens web-flader (palet med målte kontraster,
+Archivo-bredderampe, fræset plade, family-bar, handoff, regler) står i
+`rl-family/DESIGN.md` (22/9-2026).
 
 Letterspacing sættes i **em**, aldrig px. Spillet satte det i px, hvilket gav samme
 3px-mellemrum på en 12px-label og et 180px rangbogstav.
