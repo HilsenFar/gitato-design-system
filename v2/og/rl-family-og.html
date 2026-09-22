@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- 1200x630 share cards for the three RL landings. ?p=tracker|overlay|roll -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  @font-face { font-family: 'Archivo'; src: url('archivo-var.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
+  @font-face { font-family: 'Orbitron'; src: url('orbitron-800.woff2') format('woff2'); font-weight: 800; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative; font-family: 'Archivo', sans-serif; color: #B8C7E0;
+    background:
+      radial-gradient(120% 70% at 50% -10%, rgba(120,160,215,.20), transparent 62%),
+      linear-gradient(180deg, rgba(10,16,30,.50), rgba(6,10,19,.93) 70%),
+      url('skin-stadium.jpg') center -40px / cover no-repeat, #101A2E;
+  }
+  .copy { position: absolute; left: 70px; top: 64px; width: 520px; z-index: 3; }
+  .mark { display: flex; align-items: baseline; gap: 14px; }
+  .mark b { font-family: 'Orbitron'; font-weight: 800; font-size: 20px; letter-spacing: .24em; color: #EAF2FF; }
+  .mark span { font-size: 15px; font-weight: 600; font-stretch: 88%; letter-spacing: .18em; text-transform: uppercase; color: #8CA0BF; }
+  h1 { margin-top: 44px; font-weight: 860; font-stretch: 118%; font-size: 70px; line-height: .98; text-transform: uppercase; color: #EAF2FF; letter-spacing: -.005em; }
+  h1 em { font-style: normal; color: var(--acc); }
+  .sub { margin-top: 24px; font-size: 23px; line-height: 1.4; color: #B8C7E0; max-width: 30ch; }
+  .chips { position: absolute; left: 70px; bottom: 58px; display: flex; gap: 10px; z-index: 3; }
+  .chips span { padding: 8px 14px; font-size: 15px; font-weight: 700; font-stretch: 88%; letter-spacing: .14em; text-transform: uppercase;
+    color: #EAF2FF; background: rgba(23,36,64,.85); border: 1px solid rgba(184,199,224,.2); border-radius: 6px; }
+  .chips span.lit { color: #0B1220; background: var(--acc); border-color: transparent; }
+  .url { position: absolute; right: 64px; bottom: 64px; z-index: 3; font-size: 18px; font-weight: 700; font-stretch: 90%; letter-spacing: .12em; color: #8CA0BF; }
+  .visual { position: absolute; z-index: 2; }
+  .plate { background: linear-gradient(187deg, rgba(255,255,255,.06), rgba(255,255,255,.01) 34%, rgba(0,0,0,.07) 58%), linear-gradient(163deg, #22314F, #1A2743 46%, #0D1729);
+    border: 1px solid rgba(184,199,224,.16); border-radius: 4px 16px 4px 4px; corner-shape: round bevel round round;
+    box-shadow: inset 0 1px 0 rgba(196,224,255,.24), 0 30px 70px -20px rgba(0,0,0,.85); }
+  /* tracker: the example debrief, bigger */
+  .debrief { right: 64px; top: 120px; width: 470px; padding: 30px; }
+  .debrief .tag { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #27D9C0; border: 1px solid rgba(39,217,192,.45); border-radius: 4px; padding: 4px 9px; }
+  .debrief h3 { margin: 18px 0 18px; font-size: 30px; font-weight: 720; color: #EAF2FF; }
+  .meter { position: relative; height: 14px; border-radius: 7px; background: rgba(6,12,24,.8); }
+  .meter i { position: absolute; inset: 0 auto 0 0; width: 64%; border-radius: 7px; background: linear-gradient(90deg, rgba(39,217,192,.55), #27D9C0); }
+  .meter u { position: absolute; left: 41%; top: -6px; bottom: -6px; width: 3px; background: #8CA0BF; }
+  .stats { display: flex; gap: 40px; margin: 20px 0 22px; }
+  .stats small { display: block; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #8CA0BF; }
+  .stats b { font-size: 30px; font-weight: 750; color: #EAF2FF; }
+  .stats b.t { color: #27D9C0; }
+  .advice { border-top: 1px solid rgba(184,199,224,.13); padding-top: 16px; font-size: 19px; color: #B8C7E0; }
+  .shot { right: 50px; top: 190px; width: 500px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(184,199,224,.2); box-shadow: 0 30px 70px -20px rgba(0,0,0,.9); }
+  .shot img { display: block; width: 100%; }
+  .roll-shot { top: 150px; width: 520px; }
+  body:not([data-p="tracker"]) .debrief, body:not([data-p="overlay"]) .ov, body:not([data-p="roll"]) .rl { display: none; }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <div class="mark"><b>GITATO</b><span id="crumb"></span></div>
+    <h1 id="h"></h1>
+    <p class="sub" id="sub"></p>
+  </div>
+  <div class="visual plate debrief">
+    <span class="tag">Example debrief</span>
+    <h3>Kickoff first touch</h3>
+    <div class="meter"><i></i><u></u></div>
+    <div class="stats"><span><small>Today</small><b class="t">4 / 7</b></span><span><small>Your normal</small><b>2 / 7</b></span></div>
+    <p class="advice">"Contest the kickoff, but arrive with boost to spare."</p>
+  </div>
+  <div class="visual shot ov"><img src="overlay.png" alt=""></div>
+  <div class="visual shot rl roll-shot"><img src="roll.png" alt=""></div>
+  <div class="chips" id="chips"></div>
+  <div class="url" id="url"></div>
+<script>
+  const P = {
+    tracker: { acc: '#FF9E2C', crumb: 'RL Live Tracker', h: 'Your car has a <em>tell.</em>', sub: 'A free coach for Rocket League on PC. It reads the official Stats API and coaches one focus at a time.', chips: ['Free', 'Windows', 'Open test'], url: 'rltracker.gitato.net' },
+    overlay: { acc: '#38B6FF', crumb: 'RL Rank Overlay', h: 'Every rank in the lobby, <em>on the glass.</em>', sub: 'Rank emblem, division and MMR for both teams, over your match.', chips: ['Free', 'Windows', 'Open source'], url: 'rankoverlay.gitato.net' },
+    roll: { acc: '#FF9E2C', crumb: 'RL Roll', h: 'Can’t decide what to practice? <em>Roll for it.</em>', sub: 'Thousands of training packs. Filter them, roll one, copy the code.', chips: ['Free', 'In your browser', 'Windows'], url: 'roll.gitato.net' },
+  };
+  const k = new URLSearchParams(location.search).get('p') || 'tracker';
+  const p = P[k];
+  document.body.dataset.p = k;
+  document.body.style.setProperty('--acc', p.acc);
+  document.getElementById('crumb').textContent = '/ ' + p.crumb;
+  document.getElementById('h').innerHTML = p.h;
+  document.getElementById('sub').textContent = p.sub;
+  document.getElementById('url').textContent = p.url;
+  document.getElementById('chips').innerHTML = p.chips.map((c, i) => `<span${i === 0 ? ' class="lit"' : ''}>${c}</span>`).join('');
+  if (k !== "tracker") document.querySelector("h1").style.fontSize = "56px";
+</script>
+</body>
+</html>
