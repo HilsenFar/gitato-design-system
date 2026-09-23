@@ -47,6 +47,9 @@ Kanter: `--edge rgba(184,199,224,.13)`. Sænket felt (inputs, koder): `--well #0
 
 Preload begge i `<head>` (`<link rel="preload" … as="font" crossorigin>`). Uden preload swappede Archivo ind ~1,4 s efter første maling, overskriften brød om og siden sprang 50 px (målt på overlay-landingen 22/9: CLS 0,275 → 0 efter preload).
 
+**Reserveflader med Archivos mål (23/9).** Preload alene holdt ikke på en kold, langsom indlæsning: swappet flyttede stadig hver tekstlinje 3-9 px (tracker 390 px: CLS 0,15; overlay 1024: 0,14). Hver side har derfor tre reservefamilier lige efter Archivos `@font-face`: `'Archivo FB'` (Segoe UI, Windows), `'Archivo FB A'` (Arial, macOS/iOS) og `'Archivo FB R'` (Roboto, Android), hver i tre vægtspænd (100-549 / 550-749 / 750-900). De har Archivos linjemål (`ascent-override` 87,8 % og `descent-override` 21,0 %, begge divideret med `size-adjust`) og er skaleret til Archivos bredde på sidens egen tekst. Stakken er `'Archivo', 'Archivo FB', 'Archivo FB A', 'Archivo FB R', 'Segoe UI', system-ui, sans-serif`. Tallene er regnet ud med fontTools på selve fontfilerne (Roboto-bredden fra capsize-metrikkerne), med overskriftsmålet som parameter: wdth 118 / wght 840 på trackeren, 105 / 850 på overlay og roll. Resultat: CLS ≤ 0,07 i alle målte størrelser, og Archivo ses stadig ved første besøg.
+`font-display: optional` blev prøvet og forkastet: ved 30 Mbit/s og 40 ms fik overlay og roll ved første besøg Segoe UI i overskriften, og en landingsside får mest førstegangsbesøg. Behold `swap`.
+
 ## 3. Komponenter
 
 **Fræset plade** (kort, privatliv-boks, portal-kort, roll-kontroller): ét skåret hjørne øverst til højre, lyst 1 px chamfer mod lyset.
